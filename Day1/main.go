@@ -6,68 +6,91 @@ import (
 )
 
 func main() {
+	//KALENDER PER TAHUN. GANTI TAHUN DI VARIABEL tahun
+	tahun := 1994
+	jumlahhari := [12]int{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
+	namabulan := [12]string{"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"}
+	haripertamadarisetiapbulan := [12]int{}
+	empty := "-- "
+	var haripertama int
 
-	day := 1
-	// tahun := 2020
-	// // space := "-"
-	// jumlahhari := [12]int{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
-	// firstday := [12]int{}
-
-	// if (tahun%4 == 0 && tahun%100 != 0) || tahun%400 == 0 {
-	// 	jumlahhari[1] = 29
-	// }
-
-	var arrbul [13]time.Month
-	arrbul[1] = time.January
-	arrbul[2] = time.February
-	arrbul[3] = time.March
-	arrbul[4] = time.April
-	arrbul[5] = time.May
-	arrbul[6] = time.July
-	arrbul[7] = time.June
-	arrbul[8] = time.August
-	arrbul[9] = time.September
-	arrbul[10] = time.October
-	arrbul[11] = time.November
-	arrbul[12] = time.December
-
-	for i := 1; i <= len(arrbul); i++ {
-		fmt.Println("=======", arrbul[i], "=======")
-		fmt.Println("---------------------------------------------------")
-		fmt.Print("M\tS\tS\tR\tK\tJ\tS\n")
-		fmt.Println("---------------------------------------------------")
-		var cal = [5][7]int{}
-		for a := 0; a < 5; a++ {
-			for b := 0; b < 7; b++ {
-				cal[a][b] = day
-				day++
-				if arrbul[i] == time.February {
-					if day > 29 {
-						day = 1
-						if cal[a][b] == 29 {
-							break
-						}
-					}
-				} else {
-					if day > 30 {
-						day = 1
-						if cal[a][b] == 30 {
-							break
-						}
-					}
-				}
-			}
-		}
-
-		for a := 0; a < 5; a++ {
-			for b := 0; b < 7; b++ {
-				fmt.Print(cal[a][b], "\t")
-				if cal[a][b] == 30 {
-					break
-				}
-			}
-			fmt.Print("\n")
-		}
-		fmt.Print("\n")
+	//cek tahun kabisat
+	if (tahun%4 == 0 && tahun%100 != 0) || tahun%400 == 0 {
+		jumlahhari[1] = 29
 	}
+
+	//loop untuk menentukan hari pertama dari setiap bulan. Menggunakan time
+	for d := 0; d < 12; d++ {
+		hari := time.Date(tahun, time.Month(d+1), 1, 1, 1, 1, 1, time.UTC)
+
+		switch hari.Weekday() {
+		case 1:
+			haripertama = 1
+		case 2:
+			haripertama = 2
+		case 3:
+			haripertama = 3
+		case 4:
+			haripertama = 4
+		case 5:
+			haripertama = 5
+		case 6:
+			haripertama = 6
+		case 7:
+			haripertama = 7
+		}
+		haripertamadarisetiapbulan[d] = haripertama
+	}
+
+	fmt.Println("    KALENDER", tahun)
+
+	//loop template per bulan
+	for i := 0; i < 12; i++ {
+
+		//agar ==== di penulisannya bulannya rapi aja
+		fmt.Print("======" + namabulan[i])
+		sisaspasi := 14 - len(namabulan[i])
+		for a := 0; a < sisaspasi; a++ {
+			fmt.Print("=")
+		}
+		fmt.Println("")
+		fmt.Println("S  S  R  K  J  S  M ")
+
+		//hitung start angka di hari apa, lalu isi hari kosong
+		if haripertamadarisetiapbulan[i] > 0 {
+			for k := 1; k < haripertamadarisetiapbulan[i]; k++ {
+				fmt.Print(empty)
+			}
+		}
+
+		//loop tanggal untuk isi kalender
+		for j, h := 1, haripertamadarisetiapbulan[i]; j <= jumlahhari[i]; j, h = j+1, h+1 {
+			if j < 10 {
+				fmt.Print(j, "  ")
+			} else {
+				fmt.Print(j, " ")
+			}
+
+			//enter new line jika pembagian 7
+			if h%7 == 0 {
+				fmt.Print("\n")
+			}
+		}
+
+		//hitung sisa hari, lalu isi sisa hari
+		if haripertamadarisetiapbulan[i]+jumlahhari[i] <= 35 {
+			sisahari := 35 - (haripertamadarisetiapbulan[i] + jumlahhari[i])
+			for m := 0; m <= sisahari; m++ {
+				fmt.Print(empty)
+			}
+		} else if haripertamadarisetiapbulan[i]+jumlahhari[i] > 36 {
+			sisahari := 42 - (haripertamadarisetiapbulan[i] + jumlahhari[i])
+			for m := 0; m <= sisahari; m++ {
+				fmt.Print(empty)
+			}
+		}
+
+		fmt.Println("")
+	}
+
 }
