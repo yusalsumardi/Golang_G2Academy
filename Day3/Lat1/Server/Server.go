@@ -25,8 +25,9 @@ type Send struct {
 	Message string
 }
 
+//==================LISTENER PARK IN FROM CLIENT====================
 func ParkIn(w http.ResponseWriter, r *http.Request) {
-	send_id := Send{200, ParkInServ(), "Masukan ID parkir untuk keluar"}
+	send_id := Send{200, ParkInServ(), "Anda Berhasil Masuk"}
 	w.WriteHeader(200)
 	w.Header().Set("Content-Type", "application/json")
 	js, _ := json.Marshal(send_id)
@@ -40,6 +41,7 @@ func ParkInServ() string {
 	return park[lenBef]
 }
 
+//==================LISTENER PARK OUT FROM CLIENT====================
 func ParkOut(w http.ResponseWriter, r *http.Request) {
 	resp, _ := ioutil.ReadAll(r.Body)
 	var userParking Parking
@@ -48,8 +50,8 @@ func ParkOut(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err.Error())
 		return
 	}
-	res := servParkOut(userParking.Tipe, userParking.Plat, strconv.Itoa(int(userParking.Id)))
-	var result = Send{200, strconv.Itoa(int(userParking.Id)), res}
+	msg := servParkOut(userParking.Tipe, userParking.Plat, strconv.Itoa(int(userParking.Id)))
+	var result = Send{200, strconv.Itoa(int(userParking.Id)), msg}
 	js, _ := json.Marshal(result)
 	w.Write(js)
 }
@@ -84,7 +86,7 @@ func servParkOut(tipe, plat, id_parkir string) string {
 		}
 		tarif = tarif + ((counttime - 1) * 3000)
 	default:
-		return "Tipe yang anda masukan tidak tersedia"
+		return "Tipe kendaraan salah"
 	}
 	return "Waktu parkir anda: " + strconv.Itoa(counttime) + " detik, maka tarif parkir anda: Rp." + strconv.Itoa(tarif)
 }
@@ -100,9 +102,9 @@ func RemoveIndexStr(arr *[]string, index int) {
 
 func main() {
 
-	http.HandleFunc("/ParkIn", ParkIn)
-	http.HandleFunc("/ParkOut", ParkOut)
+	http.HandleFunc("/ParkIn", ParkIn)   //MAPPING
+	http.HandleFunc("/ParkOut", ParkOut) //MAPPING
 
-	fmt.Println("running server...")
+	fmt.Println("Server Running at Port 8082...")
 	http.ListenAndServe(":8082", nil)
 }
