@@ -3,7 +3,6 @@ package main
 import (
 	model "Project_Sales/Model"
 	"context"
-	"fmt"
 	"log"
 	"math/rand"
 	"net"
@@ -37,9 +36,9 @@ func (SalesService) NewOrder(ctx context.Context, order *model.OrderProduct) (*m
 	var msg string
 	var neworder model.Transaction
 	if idproduct <= sumproduct {
-		selectedproduct := ProductList[idproduct-1]
+		selectedproduct := ProductList[idproduct-1] //Set Product yang dipilih
 		bill := strconv.Itoa(selectedproduct.price)
-		fmt.Println(selectedproduct)
+		// fmt.Println(selectedproduct)
 		tempneworder := model.Transaction{
 			Idorder:        newIdOrder,
 			Idproduct:      order.GetIdproduct(),
@@ -59,7 +58,7 @@ func (SalesService) NewOrder(ctx context.Context, order *model.OrderProduct) (*m
 		Transaction: &neworder,
 		Message:     msg,
 	}
-	fmt.Println(OrderList)
+	// fmt.Println(OrderList)
 	return &newoutput, nil
 }
 
@@ -106,7 +105,7 @@ func (SalesService) Payment(ctx context.Context, payment *model.InputPayment) (*
 	return &newoutput, nil
 }
 
-func main() {
+func main() { //SET SERVER BARU
 	IsiProduk()
 	log.Println("Server Running --> PORT", port)
 	lis, err := net.Listen("tcp", port)
@@ -127,7 +126,9 @@ func IsiProduk() {
 	a := Product{1, "Sumplemen Peninggi Badan", 700000}
 	b := Product{2, "Skincare Glowing", 500000}
 	c := Product{3, "Sumplemen Penggemuk Berat Badan", 400000}
+	d := Product{4, "Perata Gigi", 10000}
 	ProductList = append(ProductList, a)
 	ProductList = append(ProductList, b)
 	ProductList = append(ProductList, c)
+	ProductList = append(ProductList, d)
 }

@@ -40,6 +40,7 @@ func main() {
 			fmt.Println("1. Sumplemen Peninggi Badan")
 			fmt.Println("2. Skincare Glowing")
 			fmt.Println("3. Sumplemen Penggemuk Berat Badan")
+			fmt.Println("4. Perata Gigi")
 			fmt.Println("Select a Product:")
 			var inputproduct string
 			fmt.Scanln(&inputproduct)
