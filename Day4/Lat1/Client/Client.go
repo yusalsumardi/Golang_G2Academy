@@ -23,20 +23,21 @@ func main() {
 	}
 	defer con.Close()
 	newserv := model.NewParkingServiceClient(con)
-
 	var input int
+
 	for input != 99 {
 		fmt.Println("====Menu====") //Pilihan Menu
 		fmt.Println("1. Masuk Parkir")
 		fmt.Println("2. Keluar Parkir")
 		fmt.Println("99. EXIT")
+		fmt.Println("Pilih Menu:")
 		fmt.Scanln(&input) //Scan menu
 		switch input {
 		case 1:
 			newId, newTime := GetId(newserv)
 			fmt.Println("Id :", newId)
 			fmt.Println("Time In :", newTime)
-
+			input = 0
 		case 2:
 			var (
 				id, platno, tipe string
@@ -54,6 +55,7 @@ func main() {
 			}
 			result := CheckOut(newserv, datain)
 			fmt.Println(result)
+			input = 0
 		}
 	}
 }

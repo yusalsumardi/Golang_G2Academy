@@ -15,7 +15,7 @@ import (
 )
 
 const (
-	port = "8081"
+	port = ":8081"
 )
 
 type ParkingService struct{}
