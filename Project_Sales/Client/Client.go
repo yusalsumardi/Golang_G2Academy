@@ -46,10 +46,17 @@ func main() {
 			neworder := model.OrderProduct{
 				Idproduct: inputproduct,
 			}
-			result := NewOrder(newserv, &neworder)
-			fmt.Println("============================")
-			fmt.Println(result)
-			fmt.Println("============================")
+			result, msg := NewOrder(newserv, &neworder)
+			fmt.Println("\n=================================================")
+			fmt.Println("Id Order\t: " + result.Idorder)
+			fmt.Println("Id Product\t: " + result.Idproduct)
+			fmt.Println("Product Name\t: " + result.Nameproduct)
+			fmt.Println("Price\t\t: Rp." + result.Bill)
+			fmt.Println("Payment Status\t: " + result.Status_Payment)
+			fmt.Println("No_Transfer\t: " + result.No_Tf)
+			fmt.Println("++++++++++++++++++++++++++++++++++++++++++++++++++")
+			fmt.Println(msg)
+			fmt.Println("++++++++++++++++++++++++++++++++++++++++++++++++++\n")
 		case 2:
 			orderlist := GetOrderList(newserv)
 			fmt.Println(orderlist)
@@ -65,25 +72,27 @@ func main() {
 				NoTransfer: inputNoTransfer,
 			}
 			transaction, msg := SetPayment(newserv, &newpayment)
-			fmt.Println("============================")
-			fmt.Println(transaction)
-			fmt.Println("============================")
+			fmt.Println("\n=================================================")
+			fmt.Println("Id Order\t: " + transaction.Idorder)
+			fmt.Println("Id Product\t: " + transaction.Idproduct)
+			fmt.Println("Product Name\t: " + transaction.Nameproduct)
+			fmt.Println("Price\t\t: Rp." + transaction.Bill)
+			fmt.Println("Payment Status\t: " + transaction.Status_Payment)
+			fmt.Println("No_Transfer\t: " + transaction.No_Tf)
+			fmt.Println("++++++++++++++++++++++++++++++++++++++++++++++++++")
 			fmt.Println(msg)
+			fmt.Println("++++++++++++++++++++++++++++++++++++++++++++++++++\n")
 		}
 	}
 
 }
 
-func NewOrder(mod model.SalesServiceClient, order *model.OrderProduct) string {
+func NewOrder(mod model.SalesServiceClient, order *model.OrderProduct) (*model.Transaction, string) {
 	resp, err := mod.NewOrder(context.Background(), order)
 	if err != nil {
 		log.Fatalf(err.Error())
 	}
-	return "Id Order\t: " + resp.Idorder + "\n" +
-		"Id Product\t: " + resp.Idproduct + "\n" +
-		"Product Name\t: " + resp.Nameproduct + "\n" +
-		"Price\t\t: " + resp.Bill + "\n" +
-		"Payment Status\t: " + resp.Status_Payment
+	return resp.Transaction, resp.Message
 }
 
 func GetOrderList(mod model.SalesServiceClient) string {
@@ -93,18 +102,20 @@ func GetOrderList(mod model.SalesServiceClient) string {
 	}
 	OrderList := resp.GetOrderList()
 	for _, value := range OrderList {
+		fmt.Printf("------------------------------------------\n")
 		fmt.Printf("Id Order : %s\n"+
 			"Id Product : %s\n"+
 			"Product Name : %s\n"+
 			"Price : Rp.%s\n"+
-			"Payment Status : %s\n", value.Idorder, value.Idproduct, value.Nameproduct, value.Bill, value.Status_Payment)
+			"Payment Status : %s\n"+
+			"No_Tf : %s\n", value.Idorder, value.Idproduct, value.Nameproduct, value.Bill, value.Status_Payment, value.No_Tf)
 		fmt.Printf("------------------------------------------\n")
 
 	}
 	return "DONE\n"
 }
 
-func SetPayment(mod model.SalesServiceClient, payment *model.InputPayment) (*model.AfterOrder, string) {
+func SetPayment(mod model.SalesServiceClient, payment *model.InputPayment) (*model.Transaction, string) {
 	resp, err := mod.Payment(context.Background(), payment)
 	if err != nil {
 		log.Fatalf(err.Error())

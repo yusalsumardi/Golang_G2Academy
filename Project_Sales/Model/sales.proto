@@ -4,7 +4,7 @@ package model;
 import "google/protobuf/Empty.proto";
 
 service SalesService{
-    rpc NewOrder(OrderProduct) returns (AfterOrder) {}
+    rpc NewOrder(OrderProduct) returns (OutTransaction) {}
     rpc ListOrder(google.protobuf.Empty) returns (OrderList){}
     rpc Payment(InputPayment) returns (OutputPayment){}
 }
@@ -13,16 +13,17 @@ message OrderProduct{
     string idproduct = 1;
 }
 
-message AfterOrder{
+message Transaction{
     string Idorder = 1;
     string Idproduct = 2;
     string Nameproduct = 3;
     string Bill = 4;
     string Status_Payment = 5;
+    string No_Tf = 6;
 }
 
 message OrderList{
-    repeated AfterOrder OrderList = 1;
+    repeated Transaction OrderList = 1;
 }
 
 message InputPayment{
@@ -31,6 +32,11 @@ message InputPayment{
 }
 
 message OutputPayment{
-    AfterOrder Transaction = 1;
+    Transaction Transaction = 1;
+    string Message = 2;
+}
+
+message OutTransaction{
+    Transaction Transaction = 1;
     string Message = 2;
 }

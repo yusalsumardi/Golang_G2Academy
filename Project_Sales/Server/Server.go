@@ -25,28 +25,42 @@ type Product struct {
 
 var ProductList []Product
 
-var OrderList []*model.AfterOrder
+var OrderList []*model.Transaction
 
 type SalesService struct{}
 
 //============================FUNC MEMBUAT ORDER BARU==============================
-func (SalesService) NewOrder(ctx context.Context, order *model.OrderProduct) (*model.AfterOrder, error) {
+func (SalesService) NewOrder(ctx context.Context, order *model.OrderProduct) (*model.OutTransaction, error) {
 	idproduct, _ := strconv.Atoi(order.GetIdproduct())
 	newIdOrder := strconv.Itoa(rand.Intn(10000))
-	selectedproduct := ProductList[idproduct-1]
-	bill := strconv.Itoa(selectedproduct.price)
-	fmt.Println(selectedproduct)
-	neworder := model.AfterOrder{
-		Idorder:        newIdOrder,
-		Idproduct:      order.GetIdproduct(),
-		Nameproduct:    selectedproduct.nameproduct,
-		Bill:           bill,
-		Status_Payment: "Waiting to Payment",
+	sumproduct := len(ProductList)
+	var msg string
+	var neworder model.Transaction
+	if idproduct <= sumproduct {
+		selectedproduct := ProductList[idproduct-1]
+		bill := strconv.Itoa(selectedproduct.price)
+		fmt.Println(selectedproduct)
+		tempneworder := model.Transaction{
+			Idorder:        newIdOrder,
+			Idproduct:      order.GetIdproduct(),
+			Nameproduct:    selectedproduct.nameproduct,
+			Bill:           bill,
+			Status_Payment: "Waiting to Payment",
+			No_Tf:          "",
+		}
+		neworder = tempneworder
+		OrderList = append(OrderList, &neworder)
+		msg = "Order Susscess!"
+	} else {
+		msg = "Order Failed: Product Number does not exist"
 	}
 
-	OrderList = append(OrderList, &neworder)
+	newoutput := model.OutTransaction{
+		Transaction: &neworder,
+		Message:     msg,
+	}
 	fmt.Println(OrderList)
-	return &neworder, nil
+	return &newoutput, nil
 }
 
 //============================MEMANGGIL SEMUA TRANSAKSI==============================
@@ -59,15 +73,37 @@ func (SalesService) ListOrder(ctx context.Context, empty *empty.Empty) (*model.O
 
 //============================PAYMENT==============================
 func (SalesService) Payment(ctx context.Context, payment *model.InputPayment) (*model.OutputPayment, error) {
-	// idtrans := payment.GetIdorder()
-	// idnotf := payment.GetNoTransfer()
-	Contoh := OrderList[1]
-	msg := "Yey"
-	Newreturn := model.OutputPayment{
-		Transaction: Contoh,
+	idtrans := payment.GetIdorder()
+	idnotf := payment.GetNoTransfer()
+	OrderListSelected := OrderList
+	var msg string
+	var newOut model.Transaction
+	// OrderSeleced := *model.Transaction
+	for _, value := range OrderListSelected {
+		if idtrans == value.Idorder {
+			if value.Status_Payment == "Waiting to Payment" {
+				value.Status_Payment = "Paid"
+				value.No_Tf = idnotf
+				msg = "Transaction Success"
+			} else {
+				msg = "Transaction Failed: Transaction Has Been Paid"
+			}
+			TempOut := &model.Transaction{
+				Idorder:        value.Idorder,
+				Idproduct:      value.Idproduct,
+				Nameproduct:    value.Nameproduct,
+				Bill:           value.Bill,
+				Status_Payment: value.Status_Payment,
+				No_Tf:          value.No_Tf,
+			}
+			newOut = *TempOut
+		}
+	}
+	newoutput := model.OutputPayment{
+		Transaction: &newOut,
 		Message:     msg,
 	}
-	return &Newreturn, nil
+	return &newoutput, nil
 }
 
 func main() {
