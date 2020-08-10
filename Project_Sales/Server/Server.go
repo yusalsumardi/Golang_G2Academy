@@ -9,6 +9,7 @@ import (
 	"net"
 	"strconv"
 
+	"github.com/golang/protobuf/ptypes/empty"
 	"google.golang.org/grpc"
 )
 
@@ -28,6 +29,7 @@ var OrderList []*model.AfterOrder
 
 type SalesService struct{}
 
+//============================FUNC MEMBUAT ORDER BARU==============================
 func (SalesService) NewOrder(ctx context.Context, order *model.OrderProduct) (*model.AfterOrder, error) {
 	idproduct, _ := strconv.Atoi(order.GetIdproduct())
 	newIdOrder := strconv.Itoa(rand.Intn(10000))
@@ -45,6 +47,27 @@ func (SalesService) NewOrder(ctx context.Context, order *model.OrderProduct) (*m
 	OrderList = append(OrderList, &neworder)
 	fmt.Println(OrderList)
 	return &neworder, nil
+}
+
+//============================MEMANGGIL SEMUA TRANSAKSI==============================
+func (SalesService) ListOrder(ctx context.Context, empty *empty.Empty) (*model.OrderList, error) {
+	NewOrderList := model.OrderList{
+		OrderList: OrderList,
+	}
+	return &NewOrderList, nil
+}
+
+//============================PAYMENT==============================
+func (SalesService) Payment(ctx context.Context, payment *model.InputPayment) (*model.OutputPayment, error) {
+	// idtrans := payment.GetIdorder()
+	// idnotf := payment.GetNoTransfer()
+	Contoh := OrderList[1]
+	msg := "Yey"
+	Newreturn := model.OutputPayment{
+		Transaction: Contoh,
+		Message:     msg,
+	}
+	return &Newreturn, nil
 }
 
 func main() {

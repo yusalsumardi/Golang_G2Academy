@@ -9,7 +9,7 @@ package model
 import (
 	context "context"
 	proto "github.com/golang/protobuf/proto"
-	_ "github.com/golang/protobuf/ptypes/empty"
+	empty "github.com/golang/protobuf/ptypes/empty"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -156,6 +156,163 @@ func (x *AfterOrder) GetStatus_Payment() string {
 	return ""
 }
 
+type OrderList struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	OrderList []*AfterOrder `protobuf:"bytes,1,rep,name=OrderList,proto3" json:"OrderList,omitempty"`
+}
+
+func (x *OrderList) Reset() {
+	*x = OrderList{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_sales_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OrderList) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OrderList) ProtoMessage() {}
+
+func (x *OrderList) ProtoReflect() protoreflect.Message {
+	mi := &file_sales_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OrderList.ProtoReflect.Descriptor instead.
+func (*OrderList) Descriptor() ([]byte, []int) {
+	return file_sales_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *OrderList) GetOrderList() []*AfterOrder {
+	if x != nil {
+		return x.OrderList
+	}
+	return nil
+}
+
+type InputPayment struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Idorder    string `protobuf:"bytes,1,opt,name=Idorder,proto3" json:"Idorder,omitempty"`
+	NoTransfer string `protobuf:"bytes,2,opt,name=NoTransfer,proto3" json:"NoTransfer,omitempty"`
+}
+
+func (x *InputPayment) Reset() {
+	*x = InputPayment{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_sales_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *InputPayment) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InputPayment) ProtoMessage() {}
+
+func (x *InputPayment) ProtoReflect() protoreflect.Message {
+	mi := &file_sales_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InputPayment.ProtoReflect.Descriptor instead.
+func (*InputPayment) Descriptor() ([]byte, []int) {
+	return file_sales_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *InputPayment) GetIdorder() string {
+	if x != nil {
+		return x.Idorder
+	}
+	return ""
+}
+
+func (x *InputPayment) GetNoTransfer() string {
+	if x != nil {
+		return x.NoTransfer
+	}
+	return ""
+}
+
+type OutputPayment struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Transaction *AfterOrder `protobuf:"bytes,1,opt,name=Transaction,proto3" json:"Transaction,omitempty"`
+	Message     string      `protobuf:"bytes,2,opt,name=Message,proto3" json:"Message,omitempty"`
+}
+
+func (x *OutputPayment) Reset() {
+	*x = OutputPayment{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_sales_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OutputPayment) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OutputPayment) ProtoMessage() {}
+
+func (x *OutputPayment) ProtoReflect() protoreflect.Message {
+	mi := &file_sales_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OutputPayment.ProtoReflect.Descriptor instead.
+func (*OutputPayment) Descriptor() ([]byte, []int) {
+	return file_sales_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *OutputPayment) GetTransaction() *AfterOrder {
+	if x != nil {
+		return x.Transaction
+	}
+	return nil
+}
+
+func (x *OutputPayment) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_sales_proto protoreflect.FileDescriptor
 
 var file_sales_proto_rawDesc = []byte{
@@ -175,12 +332,33 @@ var file_sales_proto_rawDesc = []byte{
 	0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x42, 0x69, 0x6c, 0x6c, 0x12, 0x25, 0x0a, 0x0e,
 	0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x5f, 0x50, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x18, 0x05,
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x50, 0x61, 0x79, 0x6d,
-	0x65, 0x6e, 0x74, 0x32, 0x44, 0x0a, 0x0c, 0x53, 0x61, 0x6c, 0x65, 0x73, 0x53, 0x65, 0x72, 0x76,
-	0x69, 0x63, 0x65, 0x12, 0x34, 0x0a, 0x08, 0x4e, 0x65, 0x77, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12,
-	0x13, 0x2e, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x50, 0x72, 0x6f,
-	0x64, 0x75, 0x63, 0x74, 0x1a, 0x11, 0x2e, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x41, 0x66, 0x74,
-	0x65, 0x72, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x22, 0x00, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x65, 0x6e, 0x74, 0x22, 0x3c, 0x0a, 0x09, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x4c, 0x69, 0x73, 0x74,
+	0x12, 0x2f, 0x0a, 0x09, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x01, 0x20,
+	0x03, 0x28, 0x0b, 0x32, 0x11, 0x2e, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x41, 0x66, 0x74, 0x65,
+	0x72, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x09, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x4c, 0x69, 0x73,
+	0x74, 0x22, 0x48, 0x0a, 0x0c, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x50, 0x61, 0x79, 0x6d, 0x65, 0x6e,
+	0x74, 0x12, 0x18, 0x0a, 0x07, 0x49, 0x64, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x07, 0x49, 0x64, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x1e, 0x0a, 0x0a, 0x4e,
+	0x6f, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0a, 0x4e, 0x6f, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x22, 0x5e, 0x0a, 0x0d, 0x4f,
+	0x75, 0x74, 0x70, 0x75, 0x74, 0x50, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x33, 0x0a, 0x0b,
+	0x54, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x11, 0x2e, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x41, 0x66, 0x74, 0x65, 0x72, 0x4f,
+	0x72, 0x64, 0x65, 0x72, 0x52, 0x0b, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f,
+	0x6e, 0x12, 0x18, 0x0a, 0x07, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x07, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x32, 0xb5, 0x01, 0x0a, 0x0c,
+	0x53, 0x61, 0x6c, 0x65, 0x73, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x34, 0x0a, 0x08,
+	0x4e, 0x65, 0x77, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x13, 0x2e, 0x6d, 0x6f, 0x64, 0x65, 0x6c,
+	0x2e, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x1a, 0x11, 0x2e,
+	0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x41, 0x66, 0x74, 0x65, 0x72, 0x4f, 0x72, 0x64, 0x65, 0x72,
+	0x22, 0x00, 0x12, 0x37, 0x0a, 0x09, 0x4c, 0x69, 0x73, 0x74, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12,
+	0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75,
+	0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x1a, 0x10, 0x2e, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e,
+	0x4f, 0x72, 0x64, 0x65, 0x72, 0x4c, 0x69, 0x73, 0x74, 0x22, 0x00, 0x12, 0x36, 0x0a, 0x07, 0x50,
+	0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x13, 0x2e, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x49,
+	0x6e, 0x70, 0x75, 0x74, 0x50, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x1a, 0x14, 0x2e, 0x6d, 0x6f,
+	0x64, 0x65, 0x6c, 0x2e, 0x4f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x50, 0x61, 0x79, 0x6d, 0x65, 0x6e,
+	0x74, 0x22, 0x00, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -195,19 +373,29 @@ func file_sales_proto_rawDescGZIP() []byte {
 	return file_sales_proto_rawDescData
 }
 
-var file_sales_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_sales_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_sales_proto_goTypes = []interface{}{
-	(*OrderProduct)(nil), // 0: model.OrderProduct
-	(*AfterOrder)(nil),   // 1: model.AfterOrder
+	(*OrderProduct)(nil),  // 0: model.OrderProduct
+	(*AfterOrder)(nil),    // 1: model.AfterOrder
+	(*OrderList)(nil),     // 2: model.OrderList
+	(*InputPayment)(nil),  // 3: model.InputPayment
+	(*OutputPayment)(nil), // 4: model.OutputPayment
+	(*empty.Empty)(nil),   // 5: google.protobuf.Empty
 }
 var file_sales_proto_depIdxs = []int32{
-	0, // 0: model.SalesService.NewOrder:input_type -> model.OrderProduct
-	1, // 1: model.SalesService.NewOrder:output_type -> model.AfterOrder
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	1, // 0: model.OrderList.OrderList:type_name -> model.AfterOrder
+	1, // 1: model.OutputPayment.Transaction:type_name -> model.AfterOrder
+	0, // 2: model.SalesService.NewOrder:input_type -> model.OrderProduct
+	5, // 3: model.SalesService.ListOrder:input_type -> google.protobuf.Empty
+	3, // 4: model.SalesService.Payment:input_type -> model.InputPayment
+	1, // 5: model.SalesService.NewOrder:output_type -> model.AfterOrder
+	2, // 6: model.SalesService.ListOrder:output_type -> model.OrderList
+	4, // 7: model.SalesService.Payment:output_type -> model.OutputPayment
+	5, // [5:8] is the sub-list for method output_type
+	2, // [2:5] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_sales_proto_init() }
@@ -240,6 +428,42 @@ func file_sales_proto_init() {
 				return nil
 			}
 		}
+		file_sales_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OrderList); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_sales_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*InputPayment); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_sales_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OutputPayment); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -247,7 +471,7 @@ func file_sales_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_sales_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -274,6 +498,8 @@ const _ = grpc.SupportPackageIsVersion6
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type SalesServiceClient interface {
 	NewOrder(ctx context.Context, in *OrderProduct, opts ...grpc.CallOption) (*AfterOrder, error)
+	ListOrder(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*OrderList, error)
+	Payment(ctx context.Context, in *InputPayment, opts ...grpc.CallOption) (*OutputPayment, error)
 }
 
 type salesServiceClient struct {
@@ -293,9 +519,29 @@ func (c *salesServiceClient) NewOrder(ctx context.Context, in *OrderProduct, opt
 	return out, nil
 }
 
+func (c *salesServiceClient) ListOrder(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*OrderList, error) {
+	out := new(OrderList)
+	err := c.cc.Invoke(ctx, "/model.SalesService/ListOrder", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *salesServiceClient) Payment(ctx context.Context, in *InputPayment, opts ...grpc.CallOption) (*OutputPayment, error) {
+	out := new(OutputPayment)
+	err := c.cc.Invoke(ctx, "/model.SalesService/Payment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SalesServiceServer is the server API for SalesService service.
 type SalesServiceServer interface {
 	NewOrder(context.Context, *OrderProduct) (*AfterOrder, error)
+	ListOrder(context.Context, *empty.Empty) (*OrderList, error)
+	Payment(context.Context, *InputPayment) (*OutputPayment, error)
 }
 
 // UnimplementedSalesServiceServer can be embedded to have forward compatible implementations.
@@ -304,6 +550,12 @@ type UnimplementedSalesServiceServer struct {
 
 func (*UnimplementedSalesServiceServer) NewOrder(context.Context, *OrderProduct) (*AfterOrder, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method NewOrder not implemented")
+}
+func (*UnimplementedSalesServiceServer) ListOrder(context.Context, *empty.Empty) (*OrderList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListOrder not implemented")
+}
+func (*UnimplementedSalesServiceServer) Payment(context.Context, *InputPayment) (*OutputPayment, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Payment not implemented")
 }
 
 func RegisterSalesServiceServer(s *grpc.Server, srv SalesServiceServer) {
@@ -328,6 +580,42 @@ func _SalesService_NewOrder_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SalesService_ListOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(empty.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SalesServiceServer).ListOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/model.SalesService/ListOrder",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SalesServiceServer).ListOrder(ctx, req.(*empty.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SalesService_Payment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InputPayment)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SalesServiceServer).Payment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/model.SalesService/Payment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SalesServiceServer).Payment(ctx, req.(*InputPayment))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _SalesService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "model.SalesService",
 	HandlerType: (*SalesServiceServer)(nil),
@@ -335,6 +623,14 @@ var _SalesService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "NewOrder",
 			Handler:    _SalesService_NewOrder_Handler,
+		},
+		{
+			MethodName: "ListOrder",
+			Handler:    _SalesService_ListOrder_Handler,
+		},
+		{
+			MethodName: "Payment",
+			Handler:    _SalesService_Payment_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

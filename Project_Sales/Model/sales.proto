@@ -5,6 +5,8 @@ import "google/protobuf/Empty.proto";
 
 service SalesService{
     rpc NewOrder(OrderProduct) returns (AfterOrder) {}
+    rpc ListOrder(google.protobuf.Empty) returns (OrderList){}
+    rpc Payment(InputPayment) returns (OutputPayment){}
 }
 
 message OrderProduct{
@@ -19,3 +21,16 @@ message AfterOrder{
     string Status_Payment = 5;
 }
 
+message OrderList{
+    repeated AfterOrder OrderList = 1;
+}
+
+message InputPayment{
+    string Idorder = 1;
+    string NoTransfer = 2;
+}
+
+message OutputPayment{
+    AfterOrder Transaction = 1;
+    string Message = 2;
+}

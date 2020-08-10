@@ -7,6 +7,7 @@ import (
 
 	model "Project_Sales/Model"
 
+	"github.com/golang/protobuf/ptypes/empty"
 	"google.golang.org/grpc"
 )
 
@@ -50,8 +51,24 @@ func main() {
 			fmt.Println(result)
 			fmt.Println("============================")
 		case 2:
-
+			orderlist := GetOrderList(newserv)
+			fmt.Println(orderlist)
 		case 3:
+			var inputOrderID, inputNoTransfer string
+			fmt.Println("====Payment====") //Pilihan Menu
+			fmt.Println("Input Order ID :")
+			fmt.Scanln(&inputOrderID)
+			fmt.Println("Input No Transfer :")
+			fmt.Scanln(&inputNoTransfer)
+			newpayment := model.InputPayment{
+				Idorder:    inputOrderID,
+				NoTransfer: inputNoTransfer,
+			}
+			transaction, msg := SetPayment(newserv, &newpayment)
+			fmt.Println("============================")
+			fmt.Println(transaction)
+			fmt.Println("============================")
+			fmt.Println(msg)
 		}
 	}
 
@@ -67,4 +84,30 @@ func NewOrder(mod model.SalesServiceClient, order *model.OrderProduct) string {
 		"Product Name\t: " + resp.Nameproduct + "\n" +
 		"Price\t\t: " + resp.Bill + "\n" +
 		"Payment Status\t: " + resp.Status_Payment
+}
+
+func GetOrderList(mod model.SalesServiceClient) string {
+	resp, err := mod.ListOrder(context.Background(), new(empty.Empty))
+	if err != nil {
+		log.Fatalf(err.Error())
+	}
+	OrderList := resp.GetOrderList()
+	for _, value := range OrderList {
+		fmt.Printf("Id Order : %s\n"+
+			"Id Product : %s\n"+
+			"Product Name : %s\n"+
+			"Price : Rp.%s\n"+
+			"Payment Status : %s\n", value.Idorder, value.Idproduct, value.Nameproduct, value.Bill, value.Status_Payment)
+		fmt.Printf("------------------------------------------\n")
+
+	}
+	return "DONE\n"
+}
+
+func SetPayment(mod model.SalesServiceClient, payment *model.InputPayment) (*model.AfterOrder, string) {
+	resp, err := mod.Payment(context.Background(), payment)
+	if err != nil {
+		log.Fatalf(err.Error())
+	}
+	return resp.Transaction, resp.Message
 }
