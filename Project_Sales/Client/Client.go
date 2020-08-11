@@ -41,6 +41,12 @@ func main() {
 			fmt.Println("2. Skincare Glowing")
 			fmt.Println("3. Sumplemen Penggemuk Berat Badan")
 			fmt.Println("4. Perata Gigi")
+			fmt.Println("5. Body Whitening Lotion")
+			fmt.Println("6. Body Whitening Shower Scrub")
+			fmt.Println("7. Slimming Beauty")
+			fmt.Println("8. Hair Removal Cream")
+			fmt.Println("9. Eye Lens")
+			fmt.Println("10. Minyak Bulus")
 			fmt.Println("Select a Product:")
 			var inputproduct string
 			fmt.Scanln(&inputproduct)

@@ -127,8 +127,20 @@ func IsiProduk() {
 	b := Product{2, "Skincare Glowing", 500000}
 	c := Product{3, "Sumplemen Penggemuk Berat Badan", 400000}
 	d := Product{4, "Perata Gigi", 10000}
+	e := Product{5, "Body Whitening Lotion", 50000}
+	f := Product{6, "Body Whitening Shower Scrub", 550000}
+	g := Product{7, "Slimming Beauty", 100000}
+	h := Product{8, "Hair Removal Cream", 450000}
+	i := Product{9, "Eye Lens", 90000}
+	j := Product{10, "Minyak Bulus", 65000}
 	ProductList = append(ProductList, a)
 	ProductList = append(ProductList, b)
 	ProductList = append(ProductList, c)
 	ProductList = append(ProductList, d)
+	ProductList = append(ProductList, e)
+	ProductList = append(ProductList, f)
+	ProductList = append(ProductList, g)
+	ProductList = append(ProductList, h)
+	ProductList = append(ProductList, i)
+	ProductList = append(ProductList, j)
 }
