@@ -3,6 +3,7 @@ package main
 import (
 	model "Project_Sales/Model"
 	"context"
+	"fmt"
 	"log"
 	"math/rand"
 	"net"
@@ -38,7 +39,6 @@ func (SalesService) NewOrder(ctx context.Context, order *model.OrderProduct) (*m
 	if idproduct <= sumproduct {
 		selectedproduct := ProductList[idproduct-1] //Set Product yang dipilih
 		bill := strconv.Itoa(selectedproduct.price)
-		// fmt.Println(selectedproduct)
 		tempneworder := model.Transaction{
 			Idorder:        newIdOrder,
 			Idproduct:      order.GetIdproduct(),
@@ -48,6 +48,7 @@ func (SalesService) NewOrder(ctx context.Context, order *model.OrderProduct) (*m
 			No_Tf:          "",
 		}
 		neworder = tempneworder
+		fmt.Println(tempneworder)
 		OrderList = append(OrderList, &neworder)
 		msg = "Order Susscess!"
 	} else {
@@ -96,6 +97,7 @@ func (SalesService) Payment(ctx context.Context, payment *model.InputPayment) (*
 				No_Tf:          value.No_Tf,
 			}
 			newOut = *TempOut
+			fmt.Println(newOut)
 		}
 	}
 	newoutput := model.OutputPayment{
