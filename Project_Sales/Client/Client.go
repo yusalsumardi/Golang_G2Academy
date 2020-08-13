@@ -25,6 +25,9 @@ func main() {
 	newserv := model.NewSalesServiceClient(con)
 
 	//===============Menu Client======================
+	fmt.Println("\n********************||Product||********************")
+	fmt.Println("*********************||Sales||********************")
+	fmt.Println("******************||Application||********************")
 	var input int
 	for input != 99 {
 		fmt.Println("====Menu====") //Pilihan Menu

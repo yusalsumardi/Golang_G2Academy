@@ -1,0 +1,18 @@
+Bahan PPT:
+
+Anggota:
+-Tiara Fauzi
+-Dendi
+
+GOLANG:
+dimana bahasa pemrograman GO merupakan bahasa program open source.
+GO memfokuskan pada efisiensi,
+dimana setiap pendeklrasian variabel harus melibatkan suatu proses dan tidak boleh membuat variabel namun tidak digunakan.
+
+PROTOC:
+Protoc hanya bertugas di bagian serialisasi data saja, 
+untuk komunikasi antar service atau antar aplikasi sendiri menggunakan gRPC.
+
+GRPC:
+gRPC adalah salah satu RPC framework, dibuat oleh Google. 
+Remote Procedure Call (RPC)
